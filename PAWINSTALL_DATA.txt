@@ -1,0 +1,12 @@
+{
+  programName = "CCApp1",
+  version = "1.0",
+  mainFile = "main.lua",
+  programFiles = {
+    "main.lua",
+    "test.txt",
+    "test2.txt"
+  },
+  libraries = {
+  }
+}
