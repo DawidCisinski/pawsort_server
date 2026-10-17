@@ -1,5 +1,5 @@
 local functions = {}
-local pawlib = require("pawlib")
+local pawlib = dofile("/Libraries/pawlib.lua")
 
 --===========================================================
 

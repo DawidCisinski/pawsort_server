@@ -1,14 +1,15 @@
-local pawlib = require("pawlib")
-local functions = require("functions")
+local pawlib = dofile("/Libraries/pawlib.lua")
+local program_path = "/ProgramFiles/pawsoft_server/"
+local functions = dofile(program_path .. "functions.lua")
 
-if not fs.exists("$options.txt") then
-    local f = fs.open("$options.txt", "w")
+if not fs.exists(program_path .. "$options.txt") then
+    local f = fs.open(program_path .. "$options.txt", "w")
     f.write('{guest = {power = 1, password = "default"}, user = {power = 2, password = "default"}, admin = {power = 3, password = "default"}}')
     f.close()
 end
 
-if not fs.exists("$sessions.txt") then
-    local f = fs.open("$sessions.txt", "w")
+if not fs.exists(program_path .. "$sessions.txt") then
+    local f = fs.open(program_path .. "$sessions.txt", "w")
     f.write("{}")
     f.close()
 end
@@ -20,8 +21,8 @@ if not MODEM then
 end
 
 local SERVER_IP = os.getComputerID()
-local SESSIONS = pawlib.open_list("$sessions.txt")
-local PASSWORDS = pawlib.open_list("$options.txt")
+local SESSIONS = pawlib.open_list(program_path .. "$sessions.txt")
+local PASSWORDS = pawlib.open_list(program_path .. "$options.txt")
 local USER = 0
 
 MODEM.open(SERVER_IP)
@@ -55,7 +56,7 @@ local function addRecord(client_ip, user_type, scode)
     power = PASSWORDS[user_type].power,
     key = pawlib.hash64(PASSWORDS[user_type].password)
     }
-    pawlib.save_list("$sessions.txt",SESSIONS)
+    pawlib.save_list(program_path .. "$sessions.txt",SESSIONS)
 end
 
 local function _registration(senderIP, msg)
@@ -143,7 +144,7 @@ local function console_loop()
         if cmd == "stop" then return end
         if cmd == "info" then functions.system_info(PASSWORDS,false) end
         if cmd == "help" then  pawlib.rprint("blue", "help") end
-        if cmd == "mount" then pawlib.startup_overwrite('shell.run("/pawsort-server.lua")\n') end
+        if cmd == "mount" then pawlib.startup_overwrite('\nshell.run("pawsoft_server.lua")\n',true) end
         if cmd == "clear" or cmd == "cls" then pawlib.clear() end
     end
 end
