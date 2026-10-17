@@ -148,7 +148,7 @@ local function console_loop()
         local cmd = pawlib.rinput("","","")
         if cmd == "stop" then return end
         if cmd == "info" then functions.system_info(PASSWORDS,false) end
-        if cmd == "help" then  pawlib.rprint("blue", "help") end
+        if cmd == "help" then  functions.help() end
         if cmd == "mount" then pawlib.startup_overwrite('\nshell.run("pawsoft_server.lua")\n',true) end
         if cmd == "clear" or cmd == "cls" then pawlib.clear() end
     end

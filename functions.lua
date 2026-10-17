@@ -161,4 +161,16 @@ function functions.stop(senderIP, msg, USER)
     error("Server stopped", 0)
 end
 
+function functions.help()
+    pawlib.clear()
+    print("Commands:")
+    print("")
+    print("  help       Display this help message")
+    print("  info       Show system information")
+    print("  mount      Mount server in startup.lua")
+    print("  clear      Clear the terminal screen")
+    print("  cls        Alias for clear")
+    print("  stop       Exit the program")
+end
+
 return functions
