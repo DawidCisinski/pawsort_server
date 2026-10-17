@@ -1,5 +1,7 @@
 local functions = {}
-local pawlib = dofile("/Libraries/pawlib.lua")
+
+package.path = package.path .. ";/Libraries/?.lua"
+local pawlib = require("pawlib")
 
 --===========================================================
 

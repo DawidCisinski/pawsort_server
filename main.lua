@@ -1,6 +1,11 @@
-local pawlib = dofile("/Libraries/pawlib.lua")
-local program_path = "/ProgramFiles/pawsoft_server/"
-local functions = dofile(program_path .. "functions.lua")
+local program_path = fs.getDir(shell.getRunningProgram()) .. "/"
+
+package.path = package.path .. ";/Libraries/?.lua"
+local pawlib = require("pawlib")
+
+local functions = require("functions")
+
+--===========================================================
 
 if not fs.exists(program_path .. "$options.txt") then
     local f = fs.open(program_path .. "$options.txt", "w")
@@ -29,6 +34,16 @@ MODEM.open(SERVER_IP)
 
 --===========================================================
 
+local function addRecord(client_ip, user_type, scode)
+    SESSIONS[client_ip] = {
+    password = pawlib.hash64(PASSWORDS[user_type].password .. scode),
+    ip = client_ip,
+    power = PASSWORDS[user_type].power,
+    key = pawlib.hash64(PASSWORDS[user_type].password)
+    }
+    pawlib.save_list(program_path .. "$sessions.txt",SESSIONS)
+end
+
 local function verification(SESSIONS, message, senderIP)
     local session = SESSIONS[senderIP]
 
@@ -48,16 +63,6 @@ local function verification(SESSIONS, message, senderIP)
 end
 
 --===========================================================
-
-local function addRecord(client_ip, user_type, scode)
-    SESSIONS[client_ip] = {
-    password = pawlib.hash64(PASSWORDS[user_type].password .. scode),
-    ip = client_ip,
-    power = PASSWORDS[user_type].power,
-    key = pawlib.hash64(PASSWORDS[user_type].password)
-    }
-    pawlib.save_list(program_path .. "$sessions.txt",SESSIONS)
-end
 
 local function _registration(senderIP, msg)
     if msg.user_type ~= "guest"
