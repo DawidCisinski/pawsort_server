@@ -1,12 +1,12 @@
 {
-  programName = "CCApp1",
-  version = "1.0",
+  programName = "Pawsoft_Server",
+  version = "3.0",
   mainFile = "main.lua",
   programFiles = {
     "main.lua",
-    "test.txt",
-    "test2.txt"
+    "functions.lua"
   },
   libraries = {
+    "pawlib.lua"
   }
 }
